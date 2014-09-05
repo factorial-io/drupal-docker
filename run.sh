@@ -100,18 +100,22 @@ ${DOCKER} rm ${CONTAINER_NAME} >> /dev/null
 # check datacontainer
 if ${DOCKER} ps -a | grep -qw ${DATA_CONTAINER_NAME}
 then
-  echo "${DATA_CONTAINER_NAME} already exists. do not build. \n"
+  echo "${DATA_CONTAINER_NAME} already exists. do not build. "
 else
   echo "datacontainer ${DATA_CONTAINER_NAME} does not exist. building now... \n"
   ${DOCKER} run -d --name ${DATA_CONTAINER_NAME} -v /var/lib/mysql busybox /bin/sh
 fi
 
 #check image
-if  ${DOCKER} images | grep -qw ${IMAGE_NAME}  && [ ${REBUILD} != 1 ]
+if  ${DOCKER} images | grep -qw ${IMAGE_NAME}  && [ "x${REBUILD}" == "x" ]
 then
-  echo "image ${IMAGE_NAME} already exists. do not build. \n"
+  echo "image ${IMAGE_NAME} already exists. do not build. "
 else
-  echo "image ${IMAGE_NAME} does not exist. building now... \n"
+  if [ "x${REBUILD}" == "x" ]; then
+    echo "image ${IMAGE_NAME} does not exist. building now... "
+  else
+    echo "rebuilding ${IMAGE_NAME} ${REBUILD}..."
+  fi
   ${DOCKER} build -t ${IMAGE_NAME} ./docker
 fi
 
