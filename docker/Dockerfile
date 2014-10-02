@@ -23,6 +23,7 @@ RUN /usr/local/bin/composer global require drush/drush:dev-master
 RUN sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
 RUN source $HOME/.bashrc
 
+RUN echo "extension=apc.so" >> /etc/php5/apache2/php.ini
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get autoclean
 RUN mkdir /var/run/sshd
