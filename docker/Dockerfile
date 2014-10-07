@@ -14,7 +14,15 @@ RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
 # @DISCUSS we could remove openssh completely
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached phpmyadmin drush openssh-server vim
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached phpmyadmin openssh-server vim curl
+
+# composer and drush
+RUN curl -sS https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
+RUN /usr/local/bin/composer global require drush/drush:dev-master
+RUN sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' /root/.bashrc
+
+RUN echo "extension=apc.so" >> /etc/php5/apache2/php.ini
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get autoclean
 RUN mkdir /var/run/sshd
