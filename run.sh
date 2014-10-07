@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function help {
-  echo "Usage: run.sh <project-name> <path-to-your-project-root> [--webRoot <path-to-your-drupal-root>] [--http <public-http-port>] [--ssh <public-ssh-port>] [--vhost <vhost>] [--rebuild]"
+  echo "Usage: run.sh <project-name> <path-to-your-project-root> [--webRoot <path-to-your-drupal-root>] [--http <public-http-port>] [--ssh <public-ssh-port>] [--vhost <vhost>] [--rebuild] [--no-install]"
 }
 
 if [ "$#" -lt 2 ]; then
@@ -15,7 +15,7 @@ ROOT_PATH=$2
 WEB_ROOT=$2
 DOCKER=/usr/bin/docker
 
-# remove 2
+# remove first two arguments (container name + root-path)
 shift
 shift
 
@@ -42,8 +42,11 @@ do
       ;;
     -r|--rebuild)
       REBUILD=1
-      shift
       ;;
+    -x|--no-install)
+      NO_INSTALL=1
+      ;;
+
   # ...
 
   # Special cases
@@ -87,6 +90,10 @@ fi
 
 if [ -n "${VHOST}" ]; then
   ARGUMENTS="${ARGUMENTS} -e VHOST=${VHOST}"
+fi
+
+if [ -n "${NO_INSTALL}" ]; then
+  ARGUMENTS="${ARGUMENTS} -e NO_INSTALL=1"
 fi
 
 ARGUMENTS="-e WEB_ROOT=${WEB_ROOT} ${ARGUMENTS}"
