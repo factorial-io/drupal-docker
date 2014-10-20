@@ -20,7 +20,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git mysql-client mysql-ser
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN /usr/local/bin/composer global require drush/drush:dev-master
-RUN sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' /root/.bashrc
+RUN sed -i '1i export PATH="/.composer/vendor/bin:$HOME/.composer/vendor/bin:$PATH"' /root/.bashrc
 
 RUN echo "extension=apc.so" >> /etc/php5/apache2/php.ini
 

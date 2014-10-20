@@ -1,19 +1,32 @@
 #!/bin/bash
 
+if [ ! -f /mysql_is_installed ]; then
+  echo "Installing database..."
+  mysql_install_db --user=mysql >/dev/null 2>&1
+
+  # start mysql server
+  echo "Starting MySQL server..."
+  /usr/bin/mysqld_safe >/dev/null 2>&1 &
+
+  sleep 10s
+
+  mysqladmin -u root password admin
+  mysqladmin -u root --password=admin shutdown
+  sleep 10s
+  touch /mysql_is_installed
+fi
+
+
 if [ ! -f "${WEB_ROOT}/sites/default/settings.php" ]; then
 
   # Start mysql
-  mysql_install_db
   /usr/bin/mysqld_safe &
   sleep 10s
   # Generate passwords
   DRUPAL_DB="drupal"
   MYSQL_PASSWORD='admin'
   DRUPAL_PASSWORD='admin'
-  # This is so the passwords show up in logs.
-  echo mysql root password: $MYSQL_PASSWORD
-  echo drupal password: $DRUPAL_PASSWORD
-  mysqladmin -u root password $MYSQL_PASSWORD
+
 
   if [ -n "${NO_INSTALL}" ]; then
     echo "skipping drupal setup, please setup manually."
