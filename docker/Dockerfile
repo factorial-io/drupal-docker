@@ -12,13 +12,16 @@ RUN apt-get update
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached phpmyadmin openssh-server vim curl
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached phpmyadmin openssh-server vim curl graphviz make php5-dev php-pear
 
 # composer and drush
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN /usr/local/bin/composer global require drush/drush:dev-master
 RUN sed -i '1i export PATH="/.composer/vendor/bin:$HOME/.composer/vendor/bin:$PATH"' /root/.bashrc
+
+# xhprof
+RUN pecl install xhprof-beta
 
 RUN echo "extension=apc.so" >> /etc/php5/apache2/php.ini
 
@@ -42,6 +45,7 @@ ADD ./start.sh /start.sh
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./php.ini /etc/php5/apache2/php.ini
+ADD ./xhprof.conf /etc/apache2/conf.d/xhprof.conf
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 EXPOSE 80
