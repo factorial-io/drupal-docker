@@ -42,8 +42,13 @@ This will run drupal from the path /vagrant. and will create an image called myp
 
 The script will create all necessary docker images and install a minimal drupal if no settings.php is found.
 
+## XHProf-Support
+
+The docker-image install xhprof, if you want to use it with the devel module, use these settings:
+
+    XHProf-directory: /usr/share/php
+    XHProf URL:       http://<host>/xhprof
 
 ## Todo
 
 * phpmyadmin does not work
-* xhprof needs to be installed
