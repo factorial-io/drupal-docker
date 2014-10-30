@@ -31,6 +31,7 @@ The run-script accepts several optional parametes:
 * --vhost <name> sets an environment-var named VHOST, this will help in automated setups to get the virtual hostname via docker inspect
 * --webRoot <root-folder> in case your drupal installation is part of a git repository you can set the webRoot explicitely
 * --no-install will skip the installation part, useful if you use [Fabalicious](https://github.com/stmh/fabalicious) for deployment
+
 Example:
 
     ./run.sh myproject /vagrant --http 80 --ssh 2222 --vhost myproject.dev
