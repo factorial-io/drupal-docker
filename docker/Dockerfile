@@ -7,12 +7,12 @@ FROM    debian:wheezy
 MAINTAINER Stephan Maximilian Huber <hello@stephanmaximilianhuber.com>
 
 #RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main restricted universe multiverse" > /etc/apt/sources.list
-RUN apt-get update
+RUN apt-get update --fix-missing
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached phpmyadmin openssh-server vim curl graphviz make php5-dev php-pear imagemagick
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached openssh-server vim curl graphviz make php5-dev php-pear imagemagick
 
 # composer and drush
 RUN curl -sS https://getcomposer.org/installer | php
