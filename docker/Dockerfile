@@ -48,6 +48,10 @@ ADD ./php.ini /etc/php5/apache2/php.ini
 ADD ./xhprof.conf /etc/apache2/conf.d/xhprof.conf
 ADD ./phpsendmail /usr/local/bin/phpsendmail
 RUN chmod +x /usr/local/bin/phpsendmail
+RUN touch /var/log/mail_php.log
+RUN chmod 777 /var/log/mail_php.log
+RUN touch /var/log/php_errors.log
+RUN chmod 777 /var/log/php_errors.log
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 EXPOSE 80
