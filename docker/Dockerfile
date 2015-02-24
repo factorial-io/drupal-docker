@@ -1,10 +1,10 @@
 # dockerized drupal development box
 #
-# VERSION       1
+# VERSION               1
 # DOCKER-VERSION        1
 FROM    debian:wheezy
 
-MAINTAINER Stephan Maximilian Huber <hello@stephanmaximilianhuber.com>
+MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
