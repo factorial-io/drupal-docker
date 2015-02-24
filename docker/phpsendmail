@@ -1,0 +1,28 @@
+#!/usr/bin/php
+<?php
+
+/**
+ * This script is a sendmail wrapper for php to log calls of the php mail() function.
+ * Author: Till Brehm, www.ispconfig.org
+ * (Hopefully) secured by David Goodwin <david @ _palepurple_.co.uk>
+ */
+
+$sendmail_bin = '/usr/sbin/sendmail';
+$logfile = '/var/log/mail_php.log';
+
+//* Get the email content
+$logline = '';
+$pointer = fopen('php://stdin', 'r');
+$mail = '';
+while ($line = fgets($pointer)) {
+        if(preg_match('/^to:/i', $line) || preg_match('/^from:/i', $line)) {
+                $logline .= trim($line).' ';
+        }
+        $mail .= $line;
+}
+
+
+//* Write the log
+file_put_contents($logfile, date('Y-m-d H:i:s') . ' ' . $logline . "\n\n" . $mail . "\n\n---------\n\n", FILE_APPEND);
+
+?>
