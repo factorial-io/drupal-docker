@@ -8,11 +8,12 @@ if [ ! -f /mysql_is_installed ]; then
   echo "Starting MySQL server..."
   /usr/bin/mysqld_safe >/dev/null 2>&1 &
 
-  sleep 10s
+  # wait for 30 seconds for mysql to start or exit.
+  mysqladmin --silent --wait=30 ping || exit 1
 
   mysqladmin -u root password admin
   mysqladmin -u root --password=admin shutdown
-  sleep 10s
+
   touch /mysql_is_installed
 fi
 
@@ -21,7 +22,10 @@ if [ ! -f "${WEB_ROOT}/sites/default/settings.php" ]; then
 
   # Start mysql
   /usr/bin/mysqld_safe &
-  sleep 10s
+
+  # wait for 30 seconds for mysql to start or exit.
+  mysqladmin --silent --wait=30 ping || exit 1
+
   # Generate passwords
   DRUPAL_DB="drupal"
   MYSQL_PASSWORD='admin'
@@ -40,8 +44,7 @@ if [ ! -f "${WEB_ROOT}/sites/default/settings.php" ]; then
     drush en ${PROJECT_NAME}_deploy
 
   fi
-  killall mysqld
-  sleep 10s
+  mysqladmin -u root --password=admin shutdown
 
 fi
 supervisord -n
