@@ -1,15 +1,16 @@
 #!/bin/bash
 
 function help {
-  echo "Usage: run.sh <project-name> <path-to-your-project-root> [--webRoot <path-to-your-drupal-root>] [--http <public-http-port>] [--ssh <public-ssh-port>] [--vhost <vhost>] [--rebuild] [--no-install]"
+  echo "Usage: run.sh <project-name> <path-to-your-project-root> [--webRoot <path-to-your-drupal-root>] [--http <public-http-port>] [--ssh <public-ssh-port>] [--vhost <vhost>] [--rebuild] [--no-install] [--local-build]"
 }
 
 if [ "$#" -lt 2 ]; then
   help
 fi
 
+LOCAL_BUILD=0
 CONTAINER_NAME=$1
-IMAGE_NAME=${CONTAINER_NAME}/latest
+IMAGE_NAME=factorial/drupal-docker
 DATA_CONTAINER_NAME=${CONTAINER_NAME}_mysql_data
 ROOT_PATH=$2
 WEB_ROOT=$2
@@ -46,6 +47,9 @@ do
     -x|--no-install)
       NO_INSTALL=1
       ;;
+    -l|--local-build)
+      LOCAL_BUILD=1
+      ;;
 
   # ...
 
@@ -78,6 +82,10 @@ do
   esac
   shift
 done
+
+if [ "${LOCAL_BUILD}" == "1" ]; then
+  IMAGE_NAME=${CONTAINER_NAME}/latest
+fi
 
 ARGUMENTS=""
 if [ -n "${PUBLIC_HTTP_PORT}" ]; then
@@ -123,7 +131,11 @@ else
   else
     echo "rebuilding ${IMAGE_NAME} ${REBUILD}..."
   fi
-  ${DOCKER} build -t ${IMAGE_NAME} ./docker
+  if [ "${LOCAL_BUILD}" == "1" ]; then
+    ${DOCKER} build -t ${IMAGE_NAME} ./docker
+  else
+    ${DOCKER} pull ${IMAGE_NAME}
+  fi
 fi
 
 
