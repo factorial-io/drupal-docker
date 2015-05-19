@@ -9,7 +9,7 @@ MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && apt-get -y install git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached openssh-server vim curl graphviz make php5-dev php-pear php5-mcrypt imagemagick
+RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && apt-get -y install git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached openssh-server vim curl graphviz make php5-dev php-pear php5-mcrypt imagemagick cron
 
 # composer and drush
 RUN curl -sS https://getcomposer.org/installer | php
@@ -42,6 +42,7 @@ ADD ./start.sh /start.sh
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./php.ini /etc/php5/apache2/php.ini
+ADD ./mysql.cnf /etc/mysql/conf.d/mysql.cnf
 ADD ./xhprof.conf /etc/apache2/conf.d/xhprof.conf
 ADD ./phpsendmail /usr/local/bin/phpsendmail
 RUN chmod +x /usr/local/bin/phpsendmail
