@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function help {
-  echo "Usage: run.sh <project-name> <path-to-your-project-root> [--webRoot <path-to-your-drupal-root>] [--http <public-http-port>] [--ssh <public-ssh-port>] [--vhost <vhost>] [--rebuild] [--no-install] [--local-build]"
+  echo "Usage: run.sh <project-name> <path-to-your-project-root> [--imageName <name-of-remote-image>] [--webRoot <path-to-your-drupal-root>] [--http <public-http-port>] [--ssh <public-ssh-port>] [--vhost <vhost>] [--rebuild] [--no-install] [--local-build]"
 }
 
 if [ "$#" -lt 2 ]; then
@@ -35,6 +35,10 @@ do
       ;;
     -v|--vhost)
       VHOST=$2
+      shift
+      ;;
+    -i|--imageName)
+      IMAGE_NAME=$2
       shift
       ;;
     -w|--webRoot)
