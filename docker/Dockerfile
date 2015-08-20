@@ -44,6 +44,7 @@ ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./php.ini /etc/php5/apache2/php.ini
 ADD ./mysql.cnf /etc/mysql/conf.d/mysql.cnf
 ADD ./xhprof.conf /etc/apache2/conf.d/xhprof.conf
+ADD ./security.conf /etc/apache2/conf.d/security.conf
 ADD ./phpsendmail /usr/local/bin/phpsendmail
 RUN chmod +x /usr/local/bin/phpsendmail
 RUN touch /var/log/mail_php.log
