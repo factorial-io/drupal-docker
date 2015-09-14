@@ -8,11 +8,14 @@ if [ ! -f /mysql_is_installed ]; then
   echo "Starting MySQL server..."
   /usr/bin/mysqld_safe >/dev/null 2>&1 &
 
-  sleep 10s
+  # wait for 30 seconds for mysql to start or exit.
+  mysqladmin --silent --wait=30 ping || exit 1
 
+  # DNS is not resolved so use 127.0.0.1.
+  mysql -uroot -p$MYSQL_PASSWORD -e "UPDATE user SET host='127.0.0.1' where user='root' and host='localhost'; FLUSH PRIVILEGES;"
   mysqladmin -u root password admin
   mysqladmin -u root --password=admin shutdown
-  sleep 10s
+
   touch /mysql_is_installed
 fi
 
@@ -21,7 +24,10 @@ if [ ! -f "${WEB_ROOT}/sites/default/settings.php" ]; then
 
   # Start mysql
   /usr/bin/mysqld_safe &
-  sleep 10s
+
+  # wait for 30 seconds for mysql to start or exit.
+  mysqladmin --silent --wait=30 ping || exit 1
+
   # Generate passwords
   DRUPAL_DB="drupal"
   MYSQL_PASSWORD='admin'
@@ -33,6 +39,7 @@ if [ ! -f "${WEB_ROOT}/sites/default/settings.php" ]; then
     echo "mysql-user: admin drupal-user: admin pass: admin"
   else
     echo "setup drupal in ${WEB_ROOT}"
+    # We don't have a drupal user anymore but we should have one.
     mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE drupal; GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'localhost' IDENTIFIED BY '$DRUPAL_PASSWORD'; FLUSH PRIVILEGES;"
     chmod 755 "${WEB_ROOT}/sites/default"
     cd "${WEB_ROOT}"
@@ -40,8 +47,8 @@ if [ ! -f "${WEB_ROOT}/sites/default/settings.php" ]; then
     drush en ${PROJECT_NAME}_deploy
 
   fi
-  killall mysqld
-  sleep 10s
+  mysqladmin -u root --password=admin shutdown
 
 fi
 supervisord -n
+

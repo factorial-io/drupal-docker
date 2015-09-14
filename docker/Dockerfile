@@ -1,18 +1,15 @@
 # dockerized drupal development box
 #
-# VERSION       1
+# VERSION               1
 # DOCKER-VERSION        1
 FROM    debian:wheezy
 
-MAINTAINER Stephan Maximilian Huber <hello@stephanmaximilianhuber.com>
-
-#RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main restricted universe multiverse" > /etc/apt/sources.list
-RUN apt-get update
+MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached phpmyadmin openssh-server vim curl graphviz make php5-dev php-pear
+RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && apt-get -y install git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached openssh-server vim curl graphviz make php5-dev php-pear php5-mcrypt imagemagick cron
 
 # composer and drush
 RUN curl -sS https://getcomposer.org/installer | php
@@ -45,7 +42,15 @@ ADD ./start.sh /start.sh
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./php.ini /etc/php5/apache2/php.ini
+ADD ./mysql.cnf /etc/mysql/conf.d/mysql.cnf
 ADD ./xhprof.conf /etc/apache2/conf.d/xhprof.conf
+ADD ./security.conf /etc/apache2/conf.d/security.conf
+ADD ./phpsendmail /usr/local/bin/phpsendmail
+RUN chmod +x /usr/local/bin/phpsendmail
+RUN touch /var/log/mail_php.log
+RUN chmod 777 /var/log/mail_php.log
+RUN touch /var/log/php_errors.log
+RUN chmod 777 /var/log/php_errors.log
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 EXPOSE 80
