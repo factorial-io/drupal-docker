@@ -9,7 +9,6 @@ The docker container comes with 2 services, apache on 80 and ssh on 22. You will
     ssh    : root:root
     mysql  : admin:admin
     drupal : admin: admin
-    apache : <docker-name>:<docker-name>
 
 
 ## Installation
