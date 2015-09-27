@@ -2,5 +2,8 @@
     "name": "factorial-io/drupal-docker",
     "description": "a dockerfile and helper-scripts to run a drupal installation in a docker container",
     "type": "factorial-tools",
-    "license": "MIT"
+    "license": "MIT",
+    "require": {
+        "composer/installers": "1.*"
+    }
 }
