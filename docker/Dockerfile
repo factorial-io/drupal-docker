@@ -16,6 +16,7 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN /usr/local/bin/composer global require drush/drush:dev-master
 RUN sed -i '1i export PATH="/.composer/vendor/bin:$HOME/.composer/vendor/bin:$PATH"' /root/.bashrc
+RUN $HOME/.composer/vendor/bin/drush dl registry_rebuild --default-major=7
 
 # xhprof
 RUN pecl install xhprof-beta
