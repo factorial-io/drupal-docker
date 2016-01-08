@@ -33,7 +33,7 @@ RUN sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
 
 # configure apache
 RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/sites-available/default
-RUN a2enmod rewrite vhost_alias
+RUN a2enmod rewrite vhost_alias headers
 
 VOLUME ["/var/lib/mysql", "/var/www"]
 
