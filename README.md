@@ -29,11 +29,11 @@ The container contains
 
 ```
 cd php
-docker build -t factorial/drupal-docker:php-<version>  -f Dockerfile.php-<version> .
+docker build -t factorial-io/drupal-docker:php-<version>  -f Dockerfile.php-<version> .
 cd ../php-xdebug
-docker build -t factorial/drupal-docker:php-<version>-xdebug  -f Dockerfile.php-<version> .
+docker build -t factorial-io/drupal-docker:php-<version>-xdebug  -f Dockerfile.php-<version> .
 cd ../php-wkhtmltopdf
-docker build -t factorial/drupal-docker:php-<version>-wkhtmltopdf  -f Dockerfile.php-<version> .
+docker build -t factorial-io/drupal-docker:php-<version>-wkhtmltopdf  -f Dockerfile.php-<version> .
 
 ```
 
