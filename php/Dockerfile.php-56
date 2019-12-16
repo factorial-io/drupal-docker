@@ -41,7 +41,7 @@ RUN easy_install supervisor
 ADD ./common/start.sh /start.sh
 ADD ./common/foreground.sh /etc/apache2/foreground.sh
 ADD ./common/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
-ADD ./common/supervisord.conf /etc/supervisord.conf
+ADD ./php-56/supervisord.conf /etc/supervisord.conf
 ADD ./php-56/php.ini /etc/php5/apache2/php.ini
 ADD ./php-56/php_cli.ini /etc/php5/cli/php.ini
 ADD ./php-56/phpsendmail /usr/local/bin/phpsendmail
