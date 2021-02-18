@@ -11,7 +11,7 @@ MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install git mysql-client wget optipng jpegoptim apt-transport-https lsb-release ca-certificates sqlite
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install git mysql-client wget optipng pngquant webp jpegoptim apt-transport-https lsb-release ca-certificates sqlite3
 
 # Prepare php7.2
 RUN /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
@@ -21,7 +21,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt
 
 # composer and drush
 run curl -ss https://getcomposer.org/installer | php
-run mv composer.phar /usr/local/bin/composer
+RUN mv composer.phar /usr/local/bin/composer && /usr/local/bin/composer self-update --1
 run /usr/local/bin/composer global require "hirak/prestissimo:^0.3"
 run /usr/local/bin/composer global require drush/drush:8.*
 RUN sed -i '1i export PATH="/.composer/vendor/bin:$HOME/.composer/vendor/bin:$PATH"' /root/.bashrc
