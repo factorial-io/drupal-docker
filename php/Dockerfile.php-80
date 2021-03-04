@@ -46,9 +46,9 @@ ADD ./common/start.sh /start.sh
 ADD ./common/foreground.sh /etc/apache2/foreground.sh
 ADD ./common/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
 ADD ./common/supervisord.conf /etc/supervisord.conf
-ADD ./php-8.0/php.ini /etc/php/8.0/apache2/php.ini
-ADD ./php-8.0/php_cli.ini /etc/php/8.0/cli/php.ini
-ADD ./php-8.0/phpsendmail /usr/local/bin/phpsendmail
+ADD ./php-80/php.ini /etc/php/8.0/apache2/php.ini
+ADD ./php-80/php_cli.ini /etc/php/8.0/cli/php.ini
+ADD ./php-80/phpsendmail /usr/local/bin/phpsendmail
 RUN chmod +x /usr/local/bin/phpsendmail
 RUN touch /var/log/mail_php.log
 RUN chmod 777 /var/log/mail_php.log
