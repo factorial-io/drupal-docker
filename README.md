@@ -16,7 +16,7 @@ The container contains
   * ssh
   * git
   * imagemagick
-  
+
 ## Available php versions:
 
   * 5.6
@@ -24,6 +24,7 @@ The container contains
   * 7.2
   * 7.3
   * 7.4
+  * 8.0
 
 ## Building the docker container:
 
