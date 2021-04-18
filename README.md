@@ -38,5 +38,11 @@ docker build -t factorial-io/drupal-docker:php-<version>-wkhtmltopdf  -f Dockerf
 
 ```
 
+Using the build script:
 
-
+```
+# Build all images locally for the local native docker.
+sh build.sh native
+# Build all images using a registered muti-arch builder. Images will be pushed to the docker registry. (Log in first!)
+sh build.sh both
+```
