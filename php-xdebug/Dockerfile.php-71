@@ -4,4 +4,5 @@ MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install php-xdebug
+RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys B188E2B695BD4743
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install php7.1-xdebug
