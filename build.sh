@@ -2,7 +2,7 @@
 
 # Build script to build all docker images.
 #
-# This script needs some more live.
+# This script needs some more love.
 set -e
 
 # WHAT can be native, amd64, arm or both
