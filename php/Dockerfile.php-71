@@ -4,26 +4,26 @@
 #
 # VERSION               php-71
 # DOCKER-VERSION        2
-FROM    debian:stretch
+FROM    debian:buster
 
 MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install git mysql-client wget optipng jpegoptim apt-transport-https lsb-release ca-certificates
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install git default-mysql-client wget optipng jpegoptim apt-transport-https lsb-release ca-certificates
 
 # Prepare php7.1
 RUN /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install unzip apache2 pwgen python-setuptools vim-tiny openssh-server cron vim curl graphviz make imagemagick libapache2-mod-php7.1 php7.1-mysql php7.1-curl php7.1-memcache php7.1-mcrypt  php7.1-zip php7.1-redis php7.1-mbstring php7.1-gd php7.1-dom php7.1-xml php7.1-bcmath php7.1-soap
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install unzip apache2 pwgen python3-pip vim-tiny openssh-server cron vim curl graphviz make imagemagick libapache2-mod-php7.1 php7.1-mysql php7.1-curl php7.1-memcache php7.1-mcrypt  php7.1-zip php7.1-redis php7.1-mbstring php7.1-gd php7.1-dom php7.1-xml php7.1-bcmath php7.1-soap
 
 # composer and drush
-run curl -ss https://getcomposer.org/installer | php
-run mv composer.phar /usr/local/bin/composer
-run /usr/local/bin/composer global require "hirak/prestissimo:^0.3"
-run /usr/local/bin/composer global require drush/drush:8.*
+RUN curl -ss https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
+RUN /usr/local/bin/composer global require drush/drush:8.*
+RUN /usr/local/bin/composer self-update --1
 RUN sed -i '1i export PATH="/.composer/vendor/bin:$HOME/.composer/vendor/bin:$PATH"' /root/.bashrc
 
 
@@ -42,7 +42,7 @@ RUN a2enmod rewrite vhost_alias
 VOLUME ["/var/www"]
 
 
-RUN easy_install supervisor
+RUN pip3 install supervisor
 ADD ./common/start.sh /start.sh
 ADD ./common/foreground.sh /etc/apache2/foreground.sh
 ADD ./common/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
