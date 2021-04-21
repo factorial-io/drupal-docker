@@ -8,11 +8,22 @@ set -e
 # WHAT can be native, amd64, arm or both
 # If both is set then the images are ushed to the registry
 
+case `uname -m` in
+  arm64)
+    export TARGETARCH=arm64
+    ;;
+
+  *)
+    export TARGETARCH=amd64
+    ;;
+
+esac
+
 export WHAT=$1
 
 case $WHAT in
   native)
-    export BUILD_CMD="docker build --build-arg TARGETARCH=`uname -m`"
+    export BUILD_CMD="docker build --build-arg TARGETARCH=$TARGETARCH"
     ;;
 
   amd64)
