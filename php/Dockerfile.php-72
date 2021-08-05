@@ -17,7 +17,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt
 RUN /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install unzip apache2 pwgen python3-pip vim-tiny openssh-server cron vim curl graphviz make imagemagick libapache2-mod-php7.2 php7.2-mysql php7.2-curl php7.2-memcache php7.2-redis php7.2-mbstring php7.2-zip  php7.2-gd php7.2-dom php7.2-xml php7.2-bcmath php7.2-soap
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install unzip apache2 pwgen python3-pip vim-tiny openssh-server cron vim curl graphviz make imagemagick libapache2-mod-php7.2 php7.2-mysql php7.2-curl php7.2-memcache php7.2-redis php7.2-mbstring php7.2-zip  php7.2-gd php7.2-dom php7.2-xml php7.2-bcmath php7.2-soap php7.2-apcu php7.2-sqlite3
 
 
 # composer and drush
