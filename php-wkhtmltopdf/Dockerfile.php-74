@@ -1,5 +1,5 @@
 FROM factorial/drupal-docker:php-74
-MAINTAINER stephan@factorial.io
+#MAINTAINER stephan@factorial.io
 
 RUN apt-get update && apt-get install -y wget xfonts-base xfonts-75dpi pdftk xz-utils
 ARG TARGETARCH
