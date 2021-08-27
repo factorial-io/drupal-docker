@@ -6,12 +6,14 @@
 # DOCKER-VERSION        2
 FROM    debian:stretch
 
-LABEL maintainer= "Stephan Maximilian Huber <stephan@factorial.io>"
+#LABEL maintainer= "Stephan Maximilian Huber <stephan@factorial.io>"
+
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install git mysql-client wget optipng pngquant webp jpegoptim apt-transport-https lsb-release ca-certificates sqlite3
+ENV export DEBIAN_FRONTEND=noninteractive 
+RUN apt-get update --fix-missing && apt-get -y -q install git mysql-client wget optipng pngquant webp jpegoptim apt-transport-https lsb-release ca-certificates    
 
 # Prepare php7.4
 RUN /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
@@ -42,14 +44,14 @@ RUN a2enmod rewrite vhost_alias
 VOLUME ["/var/www"]
 
 
-RUN easy_install supervisor
-ADD ./common/start.sh /start.sh
-ADD ./common/foreground.sh /etc/apache2/foreground.sh
-ADD ./common/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
-ADD ./common/supervisord.conf /etc/supervisord.conf
-ADD ./php-74/php.ini /etc/php/7.4/apache2/php.ini
-ADD ./php-74/php_cli.ini /etc/php/7.4/cli/php.ini
-ADD ./php-74/phpsendmail /usr/local/bin/phpsendmail
+RUN apt-get install -y supervisor
+ADD ./php/common/start.sh /start.sh
+ADD ./php/common/foreground.sh /etc/apache2/foreground.sh
+ADD ./php/common/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
+ADD ./php/common/supervisord.conf /etc/supervisord.conf
+ADD ./php/php-74/php.ini /etc/php/7.4/apache2/php.ini
+ADD ./php/php-74/php_cli.ini /etc/php/7.4/cli/php.ini
+ADD ./php/php-74/phpsendmail /usr/local/bin/phpsendmail
 RUN chmod +x /usr/local/bin/phpsendmail
 RUN touch /var/log/mail_php.log
 RUN chmod 777 /var/log/mail_php.log

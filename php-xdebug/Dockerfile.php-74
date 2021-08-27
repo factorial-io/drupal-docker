@@ -1,6 +1,6 @@
 FROM    factorial/drupal-docker:php-74
 
-MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
+#MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
