@@ -29,5 +29,5 @@ jobs:
         run: |
           docker buildx create --use          
           docker buildx build --file php-xdebug/Dockerfile.php-80 --push \
-            --tag  factorial-io/drupal-docker:php80-xdebug-multi-arch \
+            --tag  factorial/drupal-docker:php80-xdebug-multi-arch \
             --platform linux/amd64,linux/arm64 .

@@ -1,4 +1,4 @@
-name: Build php80 docker images multiarch
+name: Build php80 docker images multi-arch
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
       - name: build the image
         run: |
           docker buildx create --use          
-          docker buildx build --file php/Dockerfile.php-80 --push  --tag i1337/multi-arch:php80-testing-multiarch --platform linux/amd64,linux/arm64 .
+          docker buildx build --file php/Dockerfile.php-80 --push  --tag  factorial/drupal-docker:php80-multi-arch --platform linux/amd64,linux/arm64 .
 
 
 
