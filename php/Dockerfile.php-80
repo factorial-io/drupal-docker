@@ -5,7 +5,6 @@
 # VERSION               php-80
 # DOCKER-VERSION        2
 FROM    debian:buster
-
 #MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
 
 

@@ -5,7 +5,6 @@
 # VERSION               php-74
 # DOCKER-VERSION        2
 FROM    debian:stretch
-
 #LABEL maintainer= "Stephan Maximilian Huber <stephan@factorial.io>"
 
 
