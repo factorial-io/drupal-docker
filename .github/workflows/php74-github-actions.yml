@@ -2,8 +2,8 @@ name: Build php74 docker images multi-arch
 
 on:
   push:
-    paths:
-      - 'php/Dockerfile.php-74'
+    branches:
+      - multi-arch-build
 
 jobs:
   build:

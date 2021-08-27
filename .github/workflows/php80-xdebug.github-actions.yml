@@ -2,8 +2,8 @@ name: Build php80-xdebug docker images multi-arch
 
 on:
   push:
-    paths:
-      - 'php-xdebug/Dockerfile.php-80'
+    branches:
+      - multi-arch-build
 
 
 jobs:

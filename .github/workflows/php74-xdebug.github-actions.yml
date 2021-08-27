@@ -2,8 +2,8 @@ name: Build php74-xdebug docker images multiarch
 
 on:
   push:
-    paths:
-      - 'php-xdebug/Dockerfile.php-74'
+    branches:
+      - multi-arch-build
 
 
 jobs:
