@@ -1,8 +1,0 @@
-FROM factorial/drupal-docker:php-74
-#MAINTAINER stephan@factorial.io
-
-RUN apt-get update && apt-get install -y wget xfonts-base xfonts-75dpi pdftk xz-utils
-ARG TARGETARCH
-RUN wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_$TARGETARCH.deb
-RUN dpkg -i wkhtmltox_0.12.6-1.buster_$TARGETARCH.deb
-
