@@ -1,4 +1,4 @@
-FROM    factorial/drupal-docker:php-80
+FROM    factorial/drupal-docker:php80-multi-arch
 #MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
