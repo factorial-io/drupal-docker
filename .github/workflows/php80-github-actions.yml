@@ -15,8 +15,7 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
       - name: create --use
         run: docker buildx create --use
-      -
-        name: Set up QEMU
+      - name: Set up QEMU
         id: qemu
         uses: docker/setup-qemu-action@v1
         with:
