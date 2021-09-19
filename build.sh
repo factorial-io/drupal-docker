@@ -29,6 +29,13 @@ else
   export SUFFIX="-$2"
 fi
 
+if [ -z $3 ]
+then
+  export VERSIONS_TO_BUILD="71 72 73 74 80"
+else
+  export VERSIONS_TO_BUILD="$3"
+fi
+
 case $WHAT in
   native)
     export BUILD_CMD="docker build --build-arg TARGETARCH=$TARGETARCH"
@@ -51,6 +58,10 @@ case $WHAT in
 
   *)
     echo "Unknown what, should be native, amd64, arm64 or both."
+    echo "Run:"
+    echo "./build.sh <native|amd64|arm64|both> <suffix> <versions-separated-by-spaces>"
+    echo ""
+    echo "Example ./build.sh native test 80, this will build php8.0 and tag it with test-suffix"
     exit
     ;;
 esac
@@ -61,7 +72,9 @@ function build_and_push_image() {
   local base_image_tag=$2
   local tag=$3
 
-  echo "\nBuilding php $php_version with suffix $suffix and tag it with $tag ...\n"
+  echo "--------"
+  echo "Building php $php_version with suffix $suffix and tag it with $tag ..."
+  echo "--------"
 
   $BUILD_CMD \
     --build-arg BASE_IMAGE_TAG=$base_image_tag \
@@ -85,8 +98,6 @@ function build_version() {
 }
 
 
-build_version "71" $SUFFIX
-build_version "72" $SUFFIX
-build_version "73" $SUFFIX
-build_version "74" $SUFFIX
-build_version "80" $SUFFIX
+for version in $VERSIONS_TO_BUILD; do
+  build_version $version $SUFFIX
+done

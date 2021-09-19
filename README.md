@@ -32,9 +32,18 @@ The container contains
 cd php
 docker build -t factorial-io/drupal-docker:php-<version>  -f Dockerfile.php-<version> .
 cd ../php-xdebug
-docker build -t factorial-io/drupal-docker:php-<version>-xdebug  -f Dockerfile.php-<version> .
+docker build \
+  --build-arg BASE_IMAGE_TAG=php-<version> \
+  -t factorial-io/drupal-docker:php-<version>-xdebug  \
+  -f Dockerfile.php-<version> \
+  .
 cd ../php-wkhtmltopdf
-docker build -t factorial-io/drupal-docker:php-<version>-wkhtmltopdf  -f Dockerfile.php-<version> .
+docker build \
+  --build-arg TARGETARCH=<amd64|arm64> \
+  --build-arg BASE_IMAGE_TAG=php-<version> \
+  -t factorial-io/drupal-docker:php-<version>-wkhtmltopdf \
+  -f Dockerfile.php-<version> \
+  .
 
 ```
 
@@ -45,4 +54,6 @@ Using the build script:
 sh build.sh native
 # Build all images using a registered muti-arch builder. Images will be pushed to the docker registry. (Log in first!)
 sh build.sh both
+# Build only php-7.4 and tag the images with the suffix test
+sh build.sh native test 74
 ```
