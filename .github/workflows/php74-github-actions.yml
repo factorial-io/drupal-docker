@@ -28,7 +28,7 @@ jobs:
         run: docker buildx ls
       - name: build the branch-specific image for amd64
         if: steps.branch-name.outputs.is_default == 'false'
-        run: sh build.sh amd64 ${{ steps.branch-name.outputs.current_branch }} 74
+        run: ./build.sh amd64 ${{ steps.branch-name.outputs.current_branch }} 74
       - name: build the branch-specific image for arm64
         if: steps.branch-name.outputs.is_default == 'false'
-        run: sh build.sh arm64 ${{ steps.branch-name.outputs.current_branch }} 74
+        run: ./build.sh arm64 ${{ steps.branch-name.outputs.current_branch }} 74
