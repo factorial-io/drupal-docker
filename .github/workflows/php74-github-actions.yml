@@ -66,6 +66,7 @@ jobs:
       # For main branch!
       - name: build the  default image
         if: steps.branch-name.outputs.is_default == 'true'
+        run:
           ->
             docker buildx build
             --file php/Dockerfile.php-74
