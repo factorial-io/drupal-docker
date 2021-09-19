@@ -3,7 +3,7 @@ name: Build php-74 docker images multi-arch
 on:
   push:
     branches:
-      - multi-arch-build
+      - multi-arch
 
 jobs:
   build:
