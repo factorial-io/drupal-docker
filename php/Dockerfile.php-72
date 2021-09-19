@@ -1,12 +1,10 @@
 # dockerized drupal development box
 # includes apache, php, xhprof, imagemagick, sshd and drush
 # No mysql, use a dedicated mysql-docker-image and link the container.
-#
-# VERSION               php-72
-# DOCKER-VERSION        2
+
 FROM    debian:buster
 
-MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
+LABEL org.opencontainers.image.authors="stephan@factorial.io"
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl

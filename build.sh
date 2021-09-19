@@ -9,46 +9,36 @@ set -e
 # If both is set then the images are ushed to the registry
 
 
-case `uname -m` in
-  arm64)
-    export TARGETARCH=arm64
-    ;;
-
-  *)
-    export TARGETARCH=amd64
-    ;;
-
-esac
-
 export WHAT=$1
 
 if [ -z $2 ]
 then
-  export SUFFiX=""
+  export VERSIONS_TO_BUILD="71 72 73 74 80"
 else
-  export SUFFIX="-$2"
+  export VERSIONS_TO_BUILD="$2"
 fi
 
 if [ -z $3 ]
 then
-  export VERSIONS_TO_BUILD="71 72 73 74 80"
+  export SUFFiX=""
 else
-  export VERSIONS_TO_BUILD="$3"
+  export SUFFIX="-$3"
 fi
+
 
 case $WHAT in
   native)
-    export BUILD_CMD="docker build --build-arg TARGETARCH=$TARGETARCH"
+    export BUILD_CMD="docker build "
     ;;
 
   amd64)
     export PLATFORMS=linux/amd64
-    export BUILD_CMD="docker buildx build --push --platform $PLATFORMS"
+    export BUILD_CMD="docker buildx build --push "
     ;;
 
   arm64)
     export PLATFORMS=linux/arm64
-    export BUILD_CMD="docker buildx build --push --platform $PLATFORMS"
+    export BUILD_CMD="docker buildx build --push "
     ;;
 
   both)
@@ -59,9 +49,9 @@ case $WHAT in
   *)
     echo "Unknown what, should be native, amd64, arm64 or both."
     echo "Run:"
-    echo "./build.sh <native|amd64|arm64|both> <suffix> <versions-separated-by-spaces>"
+    echo "./build.sh <native|amd64|arm64|both> <versions-separated-by-spaces> <suffix>"
     echo ""
-    echo "Example ./build.sh native test 80, this will build php8.0 and tag it with test-suffix"
+    echo "Example ./build.sh native 80 test, this will build php8.0 and tag it with test-suffix"
     exit
     ;;
 esac

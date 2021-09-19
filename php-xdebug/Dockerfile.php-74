@@ -1,7 +1,7 @@
 ARG BASE_IMAGE_TAG
 FROM    factorial/drupal-docker:$BASE_IMAGE_TAG
 
-MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
+LABEL org.opencontainers.image.authors="stephan@factorial.io"
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl

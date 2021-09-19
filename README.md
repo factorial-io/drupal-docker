@@ -39,7 +39,6 @@ docker build \
   .
 cd ../php-wkhtmltopdf
 docker build \
-  --build-arg TARGETARCH=<amd64|arm64> \
   --build-arg BASE_IMAGE_TAG=php-<version> \
   -t factorial-io/drupal-docker:php-<version>-wkhtmltopdf \
   -f Dockerfile.php-<version> \
@@ -55,5 +54,7 @@ sh build.sh native
 # Build all images using a registered muti-arch builder. Images will be pushed to the docker registry. (Log in first!)
 sh build.sh both
 # Build only php-7.4 and tag the images with the suffix test
-sh build.sh native test 74
+sh build.sh native 74 test
+# Build only php-7.4 and php-8.0 and tag the images without a suffix
+sh build.sh native "74 80"
 ```
