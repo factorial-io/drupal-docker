@@ -29,7 +29,6 @@ jobs:
       - name: build the branch-specific image
         if: steps.branch-name.outputs.is_default == 'false'
         run:
-          # PHP
           ->
             docker buildx build
             --file php/Dockerfile.php-74
@@ -37,7 +36,6 @@ jobs:
             --tag factorial/drupal-docker:php-74-${{ steps.branch-name.outputs.current_branch }}
             --platform linux/amd64,linux/arm64
             .
-          # PHP + xdebug
           ->
             docker buildx build
             --file php-xdebug/Dockerfile.php-74
@@ -46,7 +44,6 @@ jobs:
             --tag factorial/drupal-docker:php-74-xdebug-${{ steps.branch-name.outputs.current_branch }}
             --platform linux/amd64,linux/arm64
             .
-          # PHP + WKHTMLTPDF AMD64
           ->
             docker buildx build
             --file php-wkhtmltopdf/Dockerfile.php-74
@@ -56,7 +53,6 @@ jobs:
             --tag factorial/drupal-docker:php-74-wkhtmltopdf-${{ steps.branch-name.outputs.current_branch }}
             --platform linux/amd64
             .
-          # PHP + WKHTMLTPDF ARM64
           ->
             docker buildx build
             --file php-wkhtmltopdf/Dockerfile.php-74
@@ -70,15 +66,13 @@ jobs:
       # For main branch!
       - name: build the  default image
         if: steps.branch-name.outputs.is_default == 'true'
-          # PHP
           ->
             docker buildx build
             --file php/Dockerfile.php-74
             --push
             --tag factorial/drupal-docker:php-74
             --platform linux/amd64,linux/arm64
-            .
-          # PHP + xdebug
+            php
           ->
             docker buildx build
             --file php-xdebug/Dockerfile.php-74
@@ -86,8 +80,7 @@ jobs:
             --build-arg BASE_IMAGE_TAG=php-74
             --tag factorial/drupal-docker:php-74-xdebug
             --platform linux/amd64,linux/arm64
-            .
-          # PHP + WKHTMLTPDF AMD64
+            php-xdebug
           ->
             docker buildx build
             --file php-wkhtmltopdf/Dockerfile.php-74
@@ -96,8 +89,7 @@ jobs:
             --build-arg BASE_IMAGE_TAG=php-74
             --tag factorial/drupal-docker:php-74-wkhtmltopdf
             --platform linux/amd64
-            .
-          # PHP + WKHTMLTPDF ARM64
+            php-wkhtmltopdf
           ->
             docker buildx build
             --file php-wkhtmltopdf/Dockerfile.php-74
@@ -106,4 +98,4 @@ jobs:
             --build-arg BASE_IMAGE_TAG=php-74
             --tag factorial/drupal-docker:php-74-wkhtmltopdf
             --platform linux/arm64
-            .
+            php-wkhtmltopdf
