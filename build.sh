@@ -8,6 +8,7 @@ set -e
 # WHAT can be native, amd64, arm or both
 # If both is set then the images are ushed to the registry
 
+
 case `uname -m` in
   arm64)
     export TARGETARCH=arm64
@@ -20,6 +21,13 @@ case `uname -m` in
 esac
 
 export WHAT=$1
+
+if [ -z $2 ]
+then
+  export SUFFiX=""
+else
+  export SUFFIX="-$2"
+fi
 
 case $WHAT in
   native)
@@ -47,23 +55,38 @@ case $WHAT in
     ;;
 esac
 
+
 function build_and_push_image() {
-  echo "Building docker image $2 ..."
-  $BUILD_CMD -t factorial/drupal-docker:$2 -f Dockerfile.php-$1 .
+  local php_version=$1
+  local base_image_tag=$2
+  local tag=$3
+
+  echo "\nBuilding php $php_version with suffix $suffix and tag it with $tag ...\n"
+
+  $BUILD_CMD \
+    --build-arg BASE_IMAGE_TAG=$base_image_tag \
+    -t factorial/drupal-docker:$tag \
+    -f Dockerfile.php-$php_version \
+    .
 }
 
 function build_version() {
-  cd php
-  build_and_push_image $1 php-$1
-  cd ../php-xdebug
-  build_and_push_image $1 php-$1-xdebug
-  cd ../php-wkhtmltopdf
-  build_and_push_image $1 php-$1-wkhtmltopdf
-  cd ..
+  local php_version=$1
+  local suffix=$2
+  echo "Building $php_version and tagging it with suffix $suffix"
+
+   cd php
+   build_and_push_image $php_version php-$1 php-$1$suffix
+   cd ../php-xdebug
+   build_and_push_image $php_version php-$1$suffix php-$php_version-xdebug$suffix
+   cd ../php-wkhtmltopdf
+   build_and_push_image $php_version php-$1$suffix php-$php_version-wkhtmltopdf$suffix
+   cd ..
 }
 
-build_version "71"
-build_version "72"
-build_version "73"
-build_version "74"
-build_version "80"
+
+build_version "71" $SUFFIX
+build_version "72" $SUFFIX
+build_version "73" $SUFFIX
+build_version "74" $SUFFIX
+build_version "80" $SUFFIX

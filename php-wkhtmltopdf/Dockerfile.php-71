@@ -1,4 +1,5 @@
-FROM factorial/drupal-docker:php-71
+ARG BASE_IMAGE_TAG
+FROM    factorial/drupal-docker:$BASE_IMAGE_TAG
 MAINTAINER stephan@factorial.io
 
 RUN apt-get update && apt-get install -y wget xfonts-base xfonts-75dpi pdftk xz-utils

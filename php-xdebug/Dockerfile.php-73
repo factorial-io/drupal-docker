@@ -1,4 +1,5 @@
-FROM    factorial/drupal-docker:php-73
+ARG BASE_IMAGE_TAG
+FROM    factorial/drupal-docker:$BASE_IMAGE_TAG
 
 MAINTAINER Stephan Maximilian Huber <stephan@factorial.io>
 
