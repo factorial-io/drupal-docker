@@ -43,12 +43,12 @@ case $WHAT in
 
   amd64)
     export PLATFORMS=linux/amd64
-    export BUILD_CMD="docker buildx build --load --platform $PLATFORMS"
+    export BUILD_CMD="docker buildx build --push --platform $PLATFORMS"
     ;;
 
   arm64)
     export PLATFORMS=linux/arm64
-    export BUILD_CMD="docker buildx build --load --platform $PLATFORMS"
+    export BUILD_CMD="docker buildx build --push --platform $PLATFORMS"
     ;;
 
   both)

@@ -26,77 +26,9 @@ jobs:
           platforms: all
       - name: buildx ls
         run: docker buildx ls
-      - name: build the branch-specific image
+      - name: build the branch-specific image for amd64
         if: steps.branch-name.outputs.is_default == 'false'
-        run:
-          ->
-            docker buildx build
-            --file php/Dockerfile.php-74
-            --push
-            --tag factorial/drupal-docker:php-74-${{ steps.branch-name.outputs.current_branch }}
-            --platform linux/amd64,linux/arm64
-            .
-          ->
-            docker buildx build
-            --file php-xdebug/Dockerfile.php-74
-            --push
-            --build-arg BASE_IMAGE_TAG=php-74-${{ steps.branch-name.outputs.current_branch }}
-            --tag factorial/drupal-docker:php-74-xdebug-${{ steps.branch-name.outputs.current_branch }}
-            --platform linux/amd64,linux/arm64
-            .
-          ->
-            docker buildx build
-            --file php-wkhtmltopdf/Dockerfile.php-74
-            --push
-            --build-arg TARGETARCH=amd64
-            --build-arg BASE_IMAGE_TAG=php-74-${{ steps.branch-name.outputs.current_branch }}
-            --tag factorial/drupal-docker:php-74-wkhtmltopdf-${{ steps.branch-name.outputs.current_branch }}
-            --platform linux/amd64
-            .
-          ->
-            docker buildx build
-            --file php-wkhtmltopdf/Dockerfile.php-74
-            --push
-            --build-arg TARGETARCH=arm64
-            --build-arg BASE_IMAGE_TAG=php-74-${{ steps.branch-name.outputs.current_branch }}
-            --tag factorial/drupal-docker:php-74-wkhtmltopdf-${{ steps.branch-name.outputs.current_branch }}
-            --platform linux/arm64
-            .
-
-      # For main branch!
-      - name: build the  default image
-        if: steps.branch-name.outputs.is_default == 'true'
-        run:
-          ->
-            docker buildx build
-            --file php/Dockerfile.php-74
-            --push
-            --tag factorial/drupal-docker:php-74
-            --platform linux/amd64,linux/arm64
-            php
-          ->
-            docker buildx build
-            --file php-xdebug/Dockerfile.php-74
-            --push
-            --build-arg BASE_IMAGE_TAG=php-74
-            --tag factorial/drupal-docker:php-74-xdebug
-            --platform linux/amd64,linux/arm64
-            php-xdebug
-          ->
-            docker buildx build
-            --file php-wkhtmltopdf/Dockerfile.php-74
-            --push
-            --build-arg TARGETARCH=amd64
-            --build-arg BASE_IMAGE_TAG=php-74
-            --tag factorial/drupal-docker:php-74-wkhtmltopdf
-            --platform linux/amd64
-            php-wkhtmltopdf
-          ->
-            docker buildx build
-            --file php-wkhtmltopdf/Dockerfile.php-74
-            --push
-            --build-arg TARGETARCH=arm64
-            --build-arg BASE_IMAGE_TAG=php-74
-            --tag factorial/drupal-docker:php-74-wkhtmltopdf
-            --platform linux/arm64
-            php-wkhtmltopdf
+        run: sh build.sh amd64 ${{ steps.branch-name.outputs.current_branch }} 74
+      - name: build the branch-specific image for arm64
+        if: steps.branch-name.outputs.is_default == 'false'
+        run: sh build.sh arm64 ${{ steps.branch-name.outputs.current_branch }} 74
