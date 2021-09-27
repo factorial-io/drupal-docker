@@ -14,7 +14,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt
 RUN /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install unzip apache2 pwgen python3-pip vim-tiny openssh-server cron vim curl graphviz make imagemagick libapache2-mod-php7.1 php7.1-mysql php7.1-curl php7.1-memcache php7.1-mcrypt  php7.1-zip php7.1-redis php7.1-mbstring php7.1-gd php7.1-dom php7.1-xml php7.1-bcmath php7.1-soap
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install rsync unzip apache2 pwgen python3-pip vim-tiny openssh-server cron vim curl graphviz make imagemagick libapache2-mod-php7.1 php7.1-mysql php7.1-curl php7.1-memcache php7.1-mcrypt  php7.1-zip php7.1-redis php7.1-mbstring php7.1-gd php7.1-dom php7.1-xml php7.1-bcmath php7.1-soap
 
 # composer and drush
 RUN curl -ss https://getcomposer.org/installer | php
