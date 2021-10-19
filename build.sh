@@ -64,7 +64,7 @@ function build_and_push_image() {
 
   echo -e "\n\n\n--------"
   echo "Building php $php_version with suffix $suffix and tag it with $tag ..."
-  echo -e "\n\n\n--------"
+  echo -e "--------\n\n\n"
 
   $BUILD_CMD \
     --build-arg BASE_IMAGE_TAG=$base_image_tag \
@@ -84,7 +84,7 @@ function build_node_and_push_image() {
 
     echo -e "\n\n\n--------"
     echo "Building node $node_version together with php $php_version with suffix $suffix and tag it with $tag ..."
-    echo -e "\n\n\n--------"
+    echo -e "--------\n\n\n"
 
     $BUILD_CMD \
       --build-arg BASE_IMAGE_TAG=$base_image_tag \
