@@ -1,4 +1,4 @@
-name: Build php-80 docker images multi-arch
+name: Build php-73 docker images multi-arch
 
 on:
   push:
@@ -29,7 +29,7 @@ jobs:
         run: docker buildx ls
       - name: build the branch-specific images for amd64/arm64
         if: steps.branch-name.outputs.current_branch != 'master'
-        run: ./build.sh both 80 ${{ steps.branch-name.outputs.current_branch }}
+        run: ./build.sh both 73 ${{ steps.branch-name.outputs.current_branch }}
       - name: build the main images for amd64/arm64
         if: steps.branch-name.outputs.current_branch == 'master'
-        run: ./build.sh both 80
+        run: ./build.sh both 73

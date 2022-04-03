@@ -62,15 +62,38 @@ function build_and_push_image() {
   local base_image_tag=$2
   local tag=$3
 
-  echo "--------"
+  echo -e "\n\n\n--------"
   echo "Building php $php_version with suffix $suffix and tag it with $tag ..."
-  echo "--------"
+  echo -e "--------\n\n\n"
 
   $BUILD_CMD \
     --build-arg BASE_IMAGE_TAG=$base_image_tag \
     -t factorial/drupal-docker:$tag \
     -f Dockerfile.php-$php_version \
     .
+}
+
+function build_node_and_push_image() {
+  local php_version=$1
+  local base_image_tag=$2
+  local suffix=$3
+  local node_versions=("12" "14" "16")
+  for node_version in "${node_versions[@]}"
+  do
+    local tag=php-$php_version-node-$node_version$suffix
+
+    echo -e "\n\n\n--------"
+    echo "Building node $node_version together with php $php_version with suffix $suffix and tag it with $tag ..."
+    echo -e "--------\n\n\n"
+
+    $BUILD_CMD \
+      --build-arg BASE_IMAGE_TAG=$base_image_tag \
+      --build-arg NODE_VERSION=$node_version \
+      -t factorial/drupal-docker:$tag \
+      -f Dockerfile.php-$php_version \
+      .
+  done
+
 }
 
 function build_version() {
@@ -84,7 +107,9 @@ function build_version() {
    build_and_push_image $php_version php-$1$suffix php-$php_version-xdebug$suffix
    cd ../php-wkhtmltopdf
    build_and_push_image $php_version php-$1$suffix php-$php_version-wkhtmltopdf$suffix
-   cd ..
+   cd ../php-node
+
+   build_node_and_push_image $php_version php-$1$suffix $suffix
 }
 
 
