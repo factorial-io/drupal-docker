@@ -19,12 +19,13 @@ The container contains
 
 ## Available php versions:
 
-  * 5.6
-  * 7.1
-  * 7.2
-  * 7.3
+  * 5.6 (not maintained anymore)
+  * 7.1 (not maintained anymore)
+  * 7.2 (not maintained anymore)
+  * 7.3 (not maintained anymore)
   * 7.4
   * 8.0
+  * 8.1
 
 ## Building the docker container:
 
