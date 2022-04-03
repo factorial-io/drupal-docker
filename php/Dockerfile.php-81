@@ -2,11 +2,7 @@
 # includes apache, php, xhprof, imagemagick, sshd and drush
 # No mysql, use a dedicated mysql-docker-image and link the container.
 #
-<<<<<<< Updated upstream
-# VERSION               php-80
-=======
 # VERSION               php-81
->>>>>>> Stashed changes
 # DOCKER-VERSION        2
 FROM    debian:buster
 LABEL org.opencontainers.image.authors="stephan@factorial.io"
@@ -20,11 +16,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt
 RUN /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 
-<<<<<<< Updated upstream
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install unzip apache2 pwgen python3-pip vim-tiny openssh-server cron vim curl graphviz make imagemagick libapache2-mod-php8.1 php8.1-mysql php8.1-curl  php8.1-mbstring php8.1-zip php8.1-gd php8.1-dom php8.1-xml php8.1-bcmath php8.1-soap php8.1-sqlite3
-=======
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install rsync unzip apache2 pwgen python3-pip vim-tiny openssh-server cron vim curl graphviz make imagemagick libapache2-mod-php8.1 php8.1-mysql php8.1-curl php8.1-memcache php8.1-redis php8.1-mbstring php8.1-zip php8.1-gd php8.1-dom php8.1-xml php8.1-bcmath php8.1-soap php8.1-sqlite3 php8.1-apcu
->>>>>>> Stashed changes
 
 # composer and drush
 RUN curl -ss https://getcomposer.org/installer | php
