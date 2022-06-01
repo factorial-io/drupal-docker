@@ -36,9 +36,6 @@ RUN echo 'root:root' |chpasswd
 RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 RUN a2enmod rewrite vhost_alias
 
-VOLUME ["/var/www"]
-
-
 RUN apt-get install -y supervisor
 ADD ./common/start.sh /start.sh
 ADD ./common/foreground.sh /etc/apache2/foreground.sh
