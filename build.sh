@@ -13,7 +13,7 @@ export WHAT=$1
 
 if [ -z $2 ]
 then
-  export VERSIONS_TO_BUILD="71 72 73 74 80"
+  export VERSIONS_TO_BUILD="74 80 81 82"
 else
   export VERSIONS_TO_BUILD="$2"
 fi
