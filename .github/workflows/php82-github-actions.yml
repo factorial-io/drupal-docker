@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Get branch names
         id: branch-name
-        uses: tj-actions/branch-names@v5
+        uses: tj-actions/branch-names@v7.0.7
       - name: checkout code
         uses: actions/checkout@v2
       - name: login to docker hub
