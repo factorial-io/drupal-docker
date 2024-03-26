@@ -1,0 +1,8 @@
+ARG BASE_IMAGE_TAG
+FROM    factorial/drupal-docker:$BASE_IMAGE_TAG
+
+LABEL org.opencontainers.image.authors="stephan@factorial.io"
+
+RUN dpkg-divert --local --rename --add /sbin/initctl
+RUN ln -sf /bin/true /sbin/initctl
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install php-xdebug
