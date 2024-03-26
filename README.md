@@ -23,10 +23,11 @@ The container contains
   * 7.1 (not maintained anymore)
   * 7.2 (not maintained anymore)
   * 7.3 (not maintained anymore)
-  * 7.4
+  * 7.4 (not maintained anymore)
   * 8.0
   * 8.1
   * 8.2
+  * 8.3
 
 ## Building the docker container:
 
