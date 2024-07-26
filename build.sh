@@ -13,7 +13,7 @@ export WHAT=$1
 
 if [ -z $2 ]
 then
-  export VERSIONS_TO_BUILD="74 80 81 82 83"
+  export VERSIONS_TO_BUILD="81 82 83"
 else
   export VERSIONS_TO_BUILD="$2"
 fi
@@ -108,8 +108,8 @@ function build_version() {
    cd ../php-wkhtmltopdf
    build_and_push_image $php_version php-$1$suffix php-$php_version-wkhtmltopdf$suffix
    cd ../php-node
-
    build_node_and_push_image $php_version php-$1$suffix $suffix
+   cd ..
 }
 
 
