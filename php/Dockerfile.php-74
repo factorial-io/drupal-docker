@@ -2,7 +2,7 @@
 # includes apache, php, xhprof, imagemagick, sshd and drush
 # No mysql, use a dedicated mysql-docker-image and link the container.
 
-FROM    debian:buster
+FROM    debian:bookworm
 LABEL org.opencontainers.image.authors="stephan@factorial.io"
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
@@ -14,7 +14,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt
 RUN /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install rsync unzip apache2 pwgen python-setuptools vim-tiny openssh-server cron vim curl graphviz make imagemagick libapache2-mod-php7.4 php7.4-mysql php7.4-curl php7.4-memcache php7.4-redis php7.4-mbstring php7.4-zip php7.4-gd php7.4-dom php7.4-xml php7.4-bcmath php7.4-soap php7.4-sqlite3
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt-get -y -q install rsync unzip apache2 pwgen python3-setuptools vim-tiny openssh-server cron vim curl graphviz make imagemagick libapache2-mod-php7.4 php7.4-mysql php7.4-curl php7.4-memcache php7.4-redis php7.4-mbstring php7.4-zip php7.4-gd php7.4-dom php7.4-xml php7.4-bcmath php7.4-soap php7.4-sqlite3
 
 # composer and drush
 RUN curl -ss https://getcomposer.org/installer | php

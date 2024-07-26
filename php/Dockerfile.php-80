@@ -4,7 +4,7 @@
 #
 # VERSION               php-80
 # DOCKER-VERSION        2
-FROM    debian:buster
+FROM    debian:bookworm
 LABEL org.opencontainers.image.authors="stephan@factorial.io"
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
@@ -38,7 +38,7 @@ RUN echo 'root:root' |chpasswd
 RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 RUN a2enmod rewrite vhost_alias
 
-RUN pip3 install supervisor
+RUN pip3 install supervisor --break-system-packages
 ADD ./common/start.sh /start.sh
 ADD ./common/foreground.sh /etc/apache2/foreground.sh
 ADD ./common/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
