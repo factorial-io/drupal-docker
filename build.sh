@@ -101,7 +101,6 @@ function build_version() {
   local suffix=$2
   echo "Building $php_version and tagging it with suffix $suffix"
 
-   echo $PWD
    cd php
    build_and_push_image $php_version php-$1 php-$1$suffix
    cd ../php-xdebug
