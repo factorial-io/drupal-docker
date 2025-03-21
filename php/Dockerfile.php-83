@@ -27,7 +27,7 @@ RUN wget https://www.sqlite.org/2025/$SQL_LITE_VERSION.tar.gz && \
 
 # Build SQLite
 WORKDIR $SQL_LITE_VERSION
-RUN ./configure && \
+RUN CFLAGS="-O2 -DSQLITE_ENABLE_COLUMN_METADATA=1" ./configure && \
     make 
 
 FROM    debian:bookworm
@@ -58,6 +58,8 @@ RUN sed -i '1i export PATH="$HOME/.config/composer/vendor/bin:$PATH"' /root/.bas
 
 COPY --from=builder /tmp/$SQL_LITE_VERSION /tmp/$SQL_LITE_VERSION
 RUN cd /tmp/$SQL_LITE_VERSION && make install && rm -rf /tmp/$SQL_LITE_VERSION
+# Hack to use the right version.
+RUN mv /usr/local/lib/libsqlite3.so /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
 
 # sshd
 RUN DEBIAN_FRONTEND=noninteractive apt-get autoclean
