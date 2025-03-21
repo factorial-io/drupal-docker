@@ -59,7 +59,8 @@ RUN sed -i '1i export PATH="$HOME/.config/composer/vendor/bin:$PATH"' /root/.bas
 COPY --from=builder /tmp/$SQL_LITE_VERSION /tmp/$SQL_LITE_VERSION
 RUN cd /tmp/$SQL_LITE_VERSION && make install && rm -rf /tmp/$SQL_LITE_VERSION
 # Hack to use the right version.
-RUN mv /usr/local/lib/libsqlite3.so /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
+RUN mkdir -p /usr/lib/x86_64-linux-gnu && cp /usr/local/lib/libsqlite3.so /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
+RUN mkdir -p /usr/lib/aarch64-linux-gnu && cp /usr/local/lib/libsqlite3.so /usr/lib/aarch64-linux-gnu/libsqlite3.so.0.8.6
 
 # sshd
 RUN DEBIAN_FRONTEND=noninteractive apt-get autoclean
