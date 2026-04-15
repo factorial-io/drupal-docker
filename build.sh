@@ -77,7 +77,7 @@ function build_node_and_push_image() {
   local php_version=$1
   local base_image_tag=$2
   local suffix=$3
-  local node_versions=("12" "14" "16" "18" "20" "22")
+  local node_versions=("16" "18" "20" "22" "24")
   for node_version in "${node_versions[@]}"
   do
     local tag=php-$php_version-node-$node_version$suffix

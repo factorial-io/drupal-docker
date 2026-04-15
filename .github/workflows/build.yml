@@ -1,0 +1,43 @@
+name: Build and push Docker images
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'  # Every Monday at 3am UTC
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['83', '84', '85']
+    steps:
+      - name: Get branch names
+        id: branch-name
+        uses: tj-actions/branch-names@v5
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
+
+      - name: Create buildx builder
+        run: docker buildx create --use
+
+      - name: Build branch-specific images
+        if: steps.branch-name.outputs.current_branch != 'master'
+        run: ./build.sh both ${{ matrix.php }} ${{ steps.branch-name.outputs.current_branch }}
+
+      - name: Build main images
+        if: steps.branch-name.outputs.current_branch == 'master'
+        run: ./build.sh both ${{ matrix.php }}
