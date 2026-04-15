@@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update --fix-missing && apt
 RUN curl -ss https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN mkdir -p /.cache && chmod -R 777 /.cache
-RUN /usr/local/bin/composer global require "drush/drush:^10"
+RUN /usr/local/bin/composer global require "drush/drush"
 RUN sed -i '1i export PATH="$HOME/.config/composer/vendor/bin:$PATH"' /root/.bashrc
 
 
@@ -79,8 +79,8 @@ ADD ./common/start.sh /start.sh
 ADD ./common/foreground.sh /etc/apache2/foreground.sh
 ADD ./common/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
 ADD ./common/supervisord.conf /etc/supervisord.conf
-ADD ./php-83/php.ini /etc/php/8.1/apache2/php.ini
-ADD ./php-83/php_cli.ini /etc/php/8.1/cli/php.ini
+ADD ./php-83/php.ini /etc/php/8.3/apache2/php.ini
+ADD ./php-83/php_cli.ini /etc/php/8.3/cli/php.ini
 ADD ./php-83/phpsendmail /usr/local/bin/phpsendmail
 RUN chmod +x /usr/local/bin/phpsendmail
 RUN touch /var/log/mail_php.log
