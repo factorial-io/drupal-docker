@@ -34,6 +34,9 @@ FROM    debian:bookworm
 ENV SQL_LITE_VERSION=sqlite-autoconf-3490100
 
 LABEL org.opencontainers.image.authors="stephan@factorial.io"
+# Not used by the build: Renovate bumps this when sury publishes a new PHP, and the push to main triggers a rebuild.
+# renovate: datasource=deb depName=php8.3-cli registryUrl=https://packages.sury.org/php?suite=bookworm&components=main&binaryArch=amd64
+ENV PHP_PACKAGE_VERSION=8.3.36-1+0~20261021.88+debian12~1.gbp250f7c
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl

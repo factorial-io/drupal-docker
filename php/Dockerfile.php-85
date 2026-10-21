@@ -6,6 +6,9 @@
 # DOCKER-VERSION        2
 FROM    debian:bookworm
 LABEL org.opencontainers.image.authors="stephan@factorial.io"
+# Not used by the build: Renovate bumps this when sury publishes a new PHP, and the push to main triggers a rebuild.
+# renovate: datasource=deb depName=php8.5-cli registryUrl=https://packages.sury.org/php?suite=bookworm&components=main&binaryArch=amd64
+ENV PHP_PACKAGE_VERSION=8.5.12-1+0~20261021.27+debian12~1.gbp1a3e8a
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "PHP package versions from packages.sury.org, see PHP_PACKAGE_VERSION in the Dockerfiles",
+      "managerFilePatterns": ["/(^|/)Dockerfile\\.php-\\d+$/"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) registryUrl=(?<registryUrl>\\S+)\\nENV PHP_PACKAGE_VERSION=(?<currentValue>\\S+)"
+      ],
+      "versioningTemplate": "deb"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "PHP bumps only trigger a rebuild, merge them straight away",
+      "matchDatasources": ["deb"],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": true
+    }
+  ]
+}
