@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -35,9 +35,9 @@ jobs:
         run: docker buildx create --use
 
       - name: Build branch-specific images
-        if: steps.branch-name.outputs.current_branch != 'master'
+        if: steps.branch-name.outputs.current_branch != 'main'
         run: ./build.sh both ${{ matrix.php }} ${{ steps.branch-name.outputs.current_branch }}
 
       - name: Build main images
-        if: steps.branch-name.outputs.current_branch == 'master'
+        if: steps.branch-name.outputs.current_branch == 'main'
         run: ./build.sh both ${{ matrix.php }}
