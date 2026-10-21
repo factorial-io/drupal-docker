@@ -1,0 +1,20 @@
+name: Test build Docker images
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['83', '84', '85']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      # ponytail: native = plain `docker build`, amd64 only, no push. Derived images
+      # (xdebug, node, ...) pick up the locally built base. Add arm64 via QEMU if it breaks there.
+      - name: Build images
+        run: ./build.sh native ${{ matrix.php }}
