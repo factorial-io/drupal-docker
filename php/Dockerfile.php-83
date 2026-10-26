@@ -5,7 +5,7 @@
 # VERSION               php-83
 # DOCKER-VERSION        2
 
-FROM debian:bookworm as builder 
+FROM debian:trixie as builder 
 
 ENV SQL_LITE_VERSION=sqlite-autoconf-3490100
 # Set environment variables for non-interactive installation
@@ -30,7 +30,7 @@ WORKDIR $SQL_LITE_VERSION
 RUN CFLAGS="-O2 -DSQLITE_ENABLE_COLUMN_METADATA=1" ./configure && \
     make 
 
-FROM    debian:bookworm
+FROM    debian:trixie
 ENV SQL_LITE_VERSION=sqlite-autoconf-3490100
 
 LABEL org.opencontainers.image.authors="stephan@factorial.io"
